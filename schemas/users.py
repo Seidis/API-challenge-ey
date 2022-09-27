@@ -1,6 +1,7 @@
 import datetime
 from pydantic import BaseModel
-        
+
+
 class User(BaseModel):
     name: str = None
     tax_id: str = None
@@ -13,3 +14,16 @@ class User(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class CreateUser(User):
+    name: str = None
+    tax_id: str = None
+    telephone: str = None
+    birth_date: datetime.date = None
+    username: str = None
+    password: str = None
+    email: str = None
+    role: str = None
+
+    pass

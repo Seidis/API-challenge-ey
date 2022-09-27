@@ -1,6 +1,5 @@
-import uvicorn
 from fastapi import FastAPI
-from fastapi_sqlalchemy import DBSessionMiddleware, db
+from fastapi_sqlalchemy import DBSessionMiddleware
 
 from routes.users import router as users_router
 

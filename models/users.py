@@ -2,9 +2,10 @@ from models import Base
 
 from sqlalchemy import Column, Integer, String, DateTime
 
+
 class User(Base):
     __tablename__ = 'users'
-    id = Column('user_id',Integer, primary_key=True)
+    id = Column('user_id', Integer, primary_key=True)
     name = Column(String)
     tax_id = Column(String)
     telephone = Column(String)
