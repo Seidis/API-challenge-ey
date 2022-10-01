@@ -1,15 +1,22 @@
 import datetime
 from pydantic import BaseModel
-        
-class User(BaseModel):
+
+
+class BaseUser(BaseModel):
+    id: int = None
     name: str = None
-    tax_id: str = None
+    email: str = None
+    password: str = None
+    role: str = None
+
+    class Config:
+        orm_mode = True
+
+
+class UserData(BaseUser):
+    cpf: str = None
     telephone: str = None
     birth_date: datetime.date = None
-    username: str = None
-    password: str = None
-    email: str = None
-    role: str = None
 
     class Config:
         orm_mode = True
