@@ -1,4 +1,5 @@
 import os
+import sys
 import config
 from routes import routes
 from fastapi import FastAPI
@@ -31,7 +32,10 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def startup() -> None:
-    await config.database.connect()
+    try:
+        await config.database.connect()
+    except Exception as e:
+        print('Erro ao conectar ao banco de dados')
 
 
 @app.on_event("shutdown")

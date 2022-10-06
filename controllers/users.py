@@ -80,14 +80,14 @@ async def update_user_data(id: int, user_data: UserData):
     return await get_user_data(id)
 
 
-@router.post("/", response_model=UserData)
+@router.post("/", response_model=BaseUser)
 async def register_user(user: CreateUser):
 
     data = user.dict()
 
     sql = f"""
-        INSERT INTO users (name, email, password, role)
-        VALUES ('{data['name']}', '{data['email']}', '{data['password']}', '{data['role']}')
+        INSERT INTO users (name, surname, email, password, role)
+        VALUES ('{data['name']}', '{data['surname']}','{data['email']}', '{data['password']}', '{data['role']}')
     """
     await database.execute(sql)
 
