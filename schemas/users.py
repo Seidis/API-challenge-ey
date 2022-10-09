@@ -8,6 +8,7 @@ from security import get_password_hash
 class BaseUser(BaseModel):
     id: int = None
     name: str = None
+    surname: str = None
     email: str = None
     role: str = None
 
