@@ -1,11 +1,9 @@
 from config import database
 
 from typing import List
-from fastapi import APIRouter, HTTPException, Depends
-from controllers.depends.users import get_usuario_logado
-from models.users import User
+from fastapi import APIRouter, HTTPException
 
-from schemas.users import BaseUser, CreateUser, UserData, UserLogin
+from schemas.users import BaseUser, CreateUser, UserData
 from security import criar_token_jwt, verify_password
 
 router = APIRouter()
@@ -41,6 +39,7 @@ async def login_user(user: str, password: str):
     return {
         'id': db_user['id'],
         'access_token': criar_token_jwt(db_user['id']),
+        'role': db_user['role'],
         'token_type': 'bearer'
     }
 
