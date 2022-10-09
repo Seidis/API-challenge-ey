@@ -149,7 +149,7 @@ pluggy==1.0.0
 pre-commit==2.20.0
 prometheus-client==0.14.1
 prompt-toolkit==3.0.31
-protobuf==4.21.2
+protobuf==4.21.6
 psutil==5.9.2
 psycopg2-binary==2.9.3
 ptyprocess==0.7.0
