@@ -17,6 +17,7 @@ app = FastAPI(title='Challenge EY - API',
 origins = [
     "http://localhost",
     "http://localhost:3000",
+    "http://127.0.0.1:3000",
     "challenge-ey.web.app",
     "challenge-ey.firebaseapp.com"
 ]
