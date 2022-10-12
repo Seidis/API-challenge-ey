@@ -1,6 +1,5 @@
-from http.client import HTTPException
 from config import database
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from typing import List
 
 from schemas.vagas import BaseVaga

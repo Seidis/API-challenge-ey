@@ -3,7 +3,7 @@ from config import database
 from typing import List
 from fastapi import APIRouter, HTTPException
 
-from schemas.users import BaseUser, CreateUser, UserData
+from schemas.users import AllUserData, BaseUser, CreateUser, UserData
 from security import criar_token_jwt, verify_password
 
 router = APIRouter()
@@ -44,41 +44,6 @@ async def login_user(user: str, password: str):
     }
 
 
-@router.get('/data', response_model=List[UserData])
-async def get_all_users_data():
-    sql = """
-        SELECT * from users
-        LEFT JOIN users_data ON users.id = users_data.user_id
-        WHERE users.id = users_data.user_id
-    """
-    return await database.fetch_all(sql)
-
-
-@router.get('/data/{id}', response_model=UserData)
-async def get_user_data(id: int):
-    sql = f"""
-        SELECT * from users
-        LEFT JOIN users_data ON users.id = users_data.user_id
-        WHERE user_id = {id}
-    """
-    return await database.fetch_one(sql)
-
-
-@router.patch('/{id}', response_model=UserData)
-async def update_user_data(id: int, user_data: UserData):
-
-    for key, value in user_data.dict().items():
-        if value is not None:
-            sql = f"""
-                UPDATE users_data
-                SET {key} = '{value}'
-                WHERE user_id = {id}
-            """
-            await database.execute(sql)
-
-    return await get_user_data(id)
-
-
 @router.post("/", response_model=BaseUser)
 async def register_user(user: CreateUser):
 
@@ -93,18 +58,11 @@ async def register_user(user: CreateUser):
     return user
 
 
-@router.delete('/{id}')
-async def delete_user(id: int):
+@router.get('/all/{id}', response_model=AllUserData)
+async def get_all_user_data(id: int):
     sql = f"""
-        DELETE FROM users_data
-        WHERE user_id = {id}
+        SELECT * FROM users
+        LEFT JOIN users_personal ON users.id = users_personal.user_id
+        WHERE users.id = {id}
     """
-    await database.execute(sql)
-
-    sql = f"""
-        DELETE FROM users
-        WHERE id = {id}
-    """
-    await database.execute(sql)
-
-    return {'message': 'User deleted successfully'}
+    return await database.fetch_one(sql)
