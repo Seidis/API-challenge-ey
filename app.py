@@ -17,8 +17,11 @@ app = FastAPI(title='Challenge EY - API',
 origins = [
     "http://localhost",
     "http://localhost:3000",
+    "http://127.0.0.1:3000",
     "challenge-ey.web.app",
-    "challenge-ey.firebaseapp.com"
+    "challenge-ey.firebaseapp.com",
+    "201.43.185.38",
+    "201.43.185.38:3000"
 ]
 
 app.add_middleware(

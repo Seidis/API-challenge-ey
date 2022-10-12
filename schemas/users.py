@@ -1,4 +1,4 @@
-from lib2to3.pgen2 import token
+from typing import Optional
 from pydantic import BaseModel, validator
 import datetime
 
@@ -37,3 +37,13 @@ class UserLogin(BaseModel):
     id: int
     acess_token: str
     token_type: str
+
+
+class AllUserData(BaseUser):
+    cpf: Optional[str] = None
+    telefone: Optional[str] = None
+    data_nascimento: Optional[datetime.date] = None
+    nome_social: Optional[str] = None
+
+    class Config:
+        orm_mode = True

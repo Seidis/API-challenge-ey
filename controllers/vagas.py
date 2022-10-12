@@ -1,6 +1,5 @@
-from http.client import HTTPException
 from config import database
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from typing import List
 
 from schemas.vagas import BaseVaga
@@ -35,7 +34,7 @@ async def get_vaga(id: int):
     return vaga
 
 
-@router.post('/', response_model=BaseVaga)
+@router.post('/create')
 async def create_vaga(vaga: BaseVaga):
     sql = f"""
         INSERT INTO vagas (
@@ -44,12 +43,23 @@ async def create_vaga(vaga: BaseVaga):
             short_description,
             description,
             salary,
-            location,
+            city,
+            state,
             type,
             level,
             created_on,
             is_active,
-            expire_date
+            expire_date,
+            tecnical,
+            personal,
+            group_event,
+            first_interview,
+            final_interview,
+            tecnical_date,
+            personal_date,
+            group_date,
+            first_interview_date,
+            final_interview_date
             )
         VALUES (
             '{vaga.image_url}',
@@ -57,16 +67,27 @@ async def create_vaga(vaga: BaseVaga):
             '{vaga.short_description}',
             '{vaga.description}',
             {vaga.salary},
-            '{vaga.location}',
+            '{vaga.city}',
+            '{vaga.state}',
             '{vaga.type}',
             '{vaga.level}',
             CURRENT_TIMESTAMP,
             {vaga.is_active},
-            '{vaga.expire_date}'
+            '{vaga.expire_date}',
+            {vaga.tecnical},
+            {vaga.personal},
+            {vaga.group_event},
+            {vaga.first_interview},
+            {vaga.final_interview},
+            '{vaga.tecnical_date}',
+            '{vaga.personal_date}',
+            '{vaga.group_date}',
+            '{vaga.first_interview_date}',
+            '{vaga.final_interview_date}'
             )
     """
-    await database.execute(sql)
-    return vaga
+    db_vaga = await database.fetch_one(sql)
+    return db_vaga
 
 
 @router.patch('/{id}', response_model=BaseVaga)
